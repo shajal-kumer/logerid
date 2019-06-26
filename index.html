@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Title goes here</title>
+		<link
+			href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
+			rel="stylesheet"
+		/>
+		<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="assets/css/style.css" rel="stylesheet" />
+		<link href="assets/css/main.css" rel="stylesheet" />
+		<link href="assets/css/responsive.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<!-- Start here -->
+
+					<table class="table table-bordered text-center my-table">
+						<thead>
+							<tr>
+								<th scope="col">
+									<input type="date" class="date" />
+								</th>
+								<th scope="col">
+									Prio
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											name="checkbox"
+											id="checkbox1"
+											value="1"
+										/>
+										<label
+											class="form-check-label"
+											for="checkbox1"
+											>1
+										</label>
+									</div>
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											name="checkbox"
+											id="checkbox2"
+											value="1"
+										/>
+										<label
+											class="form-check-label"
+											for="checkbox2"
+											>2
+										</label>
+									</div>
+								</th>
+								<th scope="col">
+									<input
+										type="number"
+										placeholder="ID"
+										class="logerID"
+									/>
+								</th>
+								<th scope="col">Beschrijving</th>
+							</tr>
+						</thead>
+						<tbody class="my-table__body"></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+		<script type="text/javascript">
+			const myTable = document.querySelector('.my-table');
+			const myTableBody = document.querySelector('.my-table__body');
+			const date = document.querySelector('.date');
+			const logerID = document.querySelector('.logerID');
+			let dateValue = null;
+
+			let today = new Date();
+			let dd = String(today.getDate()).padStart(2, '0');
+			let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+			let yyyy = today.getFullYear();
+
+			today = yyyy + '-' + mm + '-' + dd;
+			const URL = `http://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=${today}`;
+			// logLevel: 1, objectID: "a", entrydate: "2019-12-11T00:00:00", logmessage: "c"
+			window.addEventListener('DOMContentLoaded', e => {
+				fetch(URL)
+					.then(resp => resp.json())
+					.then(function(data) {
+						console.log(data.logmessages[0].entrydate.slice(0, 10));
+						data.logmessages.forEach(element => {
+							myTableBody.insertAdjacentHTML(
+								'beforeend',
+								`
+							<tr>
+								<td>${element.entrydate}</td>
+								<td>${element.logLevel}</td>
+								<td>${element.objectID}</td>
+								<td>${element.logmessage}</td>
+							</tr>
+            `
+							);
+						});
+					});
+			});
+
+			date.addEventListener('change', e => {
+				dateValue = date.value;
+				console.log(dateValue);
+				let filterArr;
+				fetch(URL)
+					.then(resp => resp.json())
+					.then(function(data) {
+						filterArr = data.logmessages.filter(element => {
+							return element.entrydate.slice(0, 10) === dateValue;
+						});
+						myTableBody.innerHTML = '';
+						filterArr.forEach(element => {
+							myTableBody.innerHTML += `
+							<tr>
+								<td>${element.entrydate}</td>
+								<td>${element.logLevel}</td>
+								<td>${element.objectID}</td>
+								<td>${element.logmessage}</td>
+							</tr>
+            `;
+						});
+					});
+			});
+
+			logerID.addEventListener('change', e => {
+				console.log(logerID.value);
+
+				let filterArr;
+				fetch(URL)
+					.then(resp => resp.json())
+					.then(function(data) {
+						filterArr = data.logmessages.filter(element => {
+							return element.objectID === logerID.value;
+						});
+
+						console.log(filterArr);
+						myTableBody.innerHTML = '';
+						filterArr.forEach(element => {
+							myTableBody.innerHTML += `
+										<tr>
+											<td>${element.entrydate}</td>
+											<td>${element.logLevel}</td>
+											<td>${element.objectID}</td>
+											<td>${element.logmessage}</td>
+										</tr>
+						`;
+						});
+					});
+			});
+		</script>
+	</body>
+</html>
