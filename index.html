@@ -92,7 +92,7 @@
 			let yyyy = today.getFullYear();
 
 			today = yyyy + '-' + mm + '-' + dd;
-			const URL = `http://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=${today}`;
+			const URL = `https://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=${today}`;
 			// logLevel: 1, objectID: "a", entrydate: "2019-12-11T00:00:00", logmessage: "c"
 			window.addEventListener('DOMContentLoaded', e => {
 				fetch(URL)
@@ -126,6 +126,8 @@
 							return element.entrydate.slice(0, 10) === dateValue;
 						});
 						myTableBody.innerHTML = '';
+						console.log(filterArr);
+
 						filterArr.forEach(element => {
 							myTableBody.innerHTML += `
 							<tr>
