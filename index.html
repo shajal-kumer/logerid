@@ -8,8 +8,10 @@
 		<link
 			href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
 			rel="stylesheet"
-		/>
-		<link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+        />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
 		<link href="assets/css/font-awesome.min.css" rel="stylesheet" />
 		<link href="assets/css/style.css" rel="stylesheet" />
 		<link href="assets/css/main.css" rel="stylesheet" />
@@ -26,44 +28,47 @@
 						<thead>
 							<tr>
 								<th scope="col">
-									<input type="date" class="date" />
+									<input
+										type="date"
+										class="date">
+									
 								</th>
 								<th scope="col">
-									Prio
-									<div class="form-check">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											name="checkbox"
-											id="checkbox1"
-											value="1"
-										/>
-										<label
-											class="form-check-label"
-											for="checkbox1"
-											>1
-										</label>
-									</div>
-									<div class="form-check">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											name="checkbox"
-											id="checkbox2"
-											value="1"
-										/>
-										<label
-											class="form-check-label"
-											for="checkbox2"
-											>2
-										</label>
-									</div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            Prio
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                           
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
+                                            <label class="form-check-label" for="defaultCheck1">
+                                               1
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="2" id="defaultCheck2">
+                                            <label class="form-check-label" for="defaultCheck2">
+                                                2
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="3" id="defaultCheck3">
+                                            <label class="form-check-label" for="defaultCheck3">
+                                                3
+                                            </label>
+                                        </div>
+                                      
+                                        </div>
+                                    </div>
+                                   
 								</th>
 								<th scope="col">
 									<input
-										type="number"
+										type="text"
 										placeholder="ID"
-										class="logerID"
+										class="objectID"
 									/>
 								</th>
 								<th scope="col">Beschrijving</th>
@@ -75,7 +80,15 @@
 			</div>
 		</div>
 
-		<script src="assets/js/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 		<script src="assets/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
@@ -83,88 +96,186 @@
 			const myTable = document.querySelector('.my-table');
 			const myTableBody = document.querySelector('.my-table__body');
 			const date = document.querySelector('.date');
-			const logerID = document.querySelector('.logerID');
+            const objectID = document.querySelector('.objectID');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            
 			let dateValue = null;
+			let logerIDValue = null;
+			let filtered;
+            let logLevelCheckbox = [];
+
+			const query = {};
 
 			let today = new Date();
 			let dd = String(today.getDate()).padStart(2, '0');
 			let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 			let yyyy = today.getFullYear();
 
+		
+
 			today = yyyy + '-' + mm + '-' + dd;
+            	date.value = today;
 			const URL = `https://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=${today}`;
-			// logLevel: 1, objectID: "a", entrydate: "2019-12-11T00:00:00", logmessage: "c"
+			//     entryTime: "15:12:14.000"
+            //     entrydate: "2019-06-27T00:00:00"
+            //     logLevel: 1
+            //     logmessage: "ExecuteQuery: cmd = System.Data.SqlClient.SqlCommand"
+            //     objectID: "1000460"
 			window.addEventListener('DOMContentLoaded', e => {
 				fetch(URL)
 					.then(resp => resp.json())
 					.then(function(data) {
-						console.log(data.logmessages[0].entrydate.slice(0, 10));
+                        
 						data.logmessages.forEach(element => {
 							myTableBody.insertAdjacentHTML(
 								'beforeend',
 								`
 							<tr>
-								<td>${element.entrydate}</td>
+								<td>${element.entryTime}</td>
 								<td>${element.logLevel}</td>
 								<td>${element.objectID}</td>
 								<td>${element.logmessage}</td>
 							</tr>
-            `
+			         `
 							);
 						});
 					});
 			});
 
 			date.addEventListener('change', e => {
-				dateValue = date.value;
-				console.log(dateValue);
-				let filterArr;
+				query.entrydate = date.value;
 				fetch(URL)
 					.then(resp => resp.json())
 					.then(function(data) {
-						filterArr = data.logmessages.filter(element => {
-							return element.entrydate.slice(0, 10) === dateValue;
-						});
-						myTableBody.innerHTML = '';
-						console.log(filterArr);
 
-						filterArr.forEach(element => {
+                        let tempArray = data.logmessages.map(item => {
+                            return {
+                                entryTime : item.entryTime,
+                                entrydate : item.entrydate.slice(0, 10),
+                                logLevel : item.logLevel,
+                                logmessage : item.logmessage,
+                                objectID : item.objectID
+                            }
+                        })
+                        console.log('on date click : ', query);
+
+						filtered = tempArray.filter(item => {
+						                        
+							for (let key in query) {
+                               
+                                if(query.objectID === '') {
+                                    delete query.objectID;
+                                    if (
+                                        item[key] === undefined ||
+                                        item[key] != query[key]
+                                    ) {
+                                        return false;
+                                    }
+                                } else {
+                                    if (
+                                        item[key] === undefined ||
+                                        item[key] != query[key]
+                                    ) {
+                                        return false;
+                                    }
+                                }
+								
+							}
+							return true;
+						});
+console.log('Date click filtered array : ', filtered);
+
+
+						myTableBody.innerHTML = '';
+
+						filtered.forEach(element => {
 							myTableBody.innerHTML += `
 							<tr>
-								<td>${element.entrydate}</td>
+								<td>${element.entryTime}</td>
 								<td>${element.logLevel}</td>
 								<td>${element.objectID}</td>
 								<td>${element.logmessage}</td>
 							</tr>
-            `;
+			         `;
 						});
 					});
 			});
 
-			logerID.addEventListener('change', e => {
-				console.log(logerID.value);
+			objectID.addEventListener('change', e => {
+				query.objectID = objectID.value;
+                console.log('Loger iD ', objectID.value);
 
-				let filterArr;
 				fetch(URL)
 					.then(resp => resp.json())
 					.then(function(data) {
-						filterArr = data.logmessages.filter(element => {
-							return element.objectID === logerID.value;
-						});
+                        console.log('on ID click : ', query);
+					if(query.objectID == '') {
+           
+                        	data.logmessages.forEach(element => {
+                            myTableBody.insertAdjacentHTML(
+                                'beforeend',
+                                `
+							<tr>
+								<td>${element.entryTime}</td>
+								<td>${element.logLevel}</td>
+								<td>${element.objectID}</td>
+								<td>${element.logmessage}</td>
+							</tr>
+			         `
+                            );
+                        });
+                    } else {
+                         let tempArray = data.logmessages.map(item => {
+                            return {
+                                entryTime: item.entryTime,
+                                entrydate: item.entrydate.slice(0, 10),
+                                logLevel: item.logLevel,
+                                logmessage: item.logmessage,
+                                objectID: item.objectID
+                            }
+                        })
+                        	filtered = tempArray.filter(item => {
+                            for (let key in query) {
+                                if (
+                                    item[key] === undefined ||
+                                    item[key] != query[key]
+                                ) {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        });
 
-						console.log(filterArr);
-						myTableBody.innerHTML = '';
-						filterArr.forEach(element => {
-							myTableBody.innerHTML += `
+
+                        myTableBody.innerHTML = '';
+                        filtered.forEach(element => {
+                            myTableBody.innerHTML += `
 										<tr>
-											<td>${element.entrydate}</td>
+											<td>${element.entryTime}</td>
 											<td>${element.logLevel}</td>
 											<td>${element.objectID}</td>
 											<td>${element.logmessage}</td>
 										</tr>
 						`;
-						});
+                        });
+                    }
 					});
+			});
+
+			dropdownMenu.addEventListener('click', e => {
+               logLevelCheckbox = [];
+               console.log('on checkbox click : ', query);
+                if(e.target.value !== undefined) {
+                 
+                    for(let i = 0; i < dropdownMenu.children.length; i++) {
+                        if(!dropdownMenu.children[i].children[0].checked) {
+                            logLevelCheckbox.push(dropdownMenu.children[i].children[0].value);
+                        }
+                        
+                    }
+                    console.log(logLevelCheckbox);
+
+                }
 			});
 		</script>
 	</body>
