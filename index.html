@@ -4,65 +4,145 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Title goes here</title>
+		<title>Log viewer</title>
 		<link
 			href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap"
 			rel="stylesheet"
-        />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        
-		<link href="assets/css/font-awesome.min.css" rel="stylesheet" />
-		<link href="assets/css/style.css" rel="stylesheet" />
-		<link href="assets/css/main.css" rel="stylesheet" />
-		<link href="assets/css/responsive.css" rel="stylesheet" />
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+			integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+			crossorigin="anonymous"
+		/>
+
+		<style>
+			button:focus {
+				outline: none !important;
+				box-shadow: none !important;
+			}
+			button:focus {
+				outline: none;
+			}
+			body {
+				font-family: 'Roboto', sans-serif;
+			}
+			.my-table {
+				margin-top: 50px;
+			}
+			.my-table thead {
+				background-color: #2980b9;
+				color: #fff;
+				font-size: 19px;
+			}
+			.my-table td {
+				border-color: #1069a5;
+			}
+			.my-table thead td,
+			.my-table thead th {
+				border-color: #1069a5;
+				border-bottom-width: 1px;
+				vertical-align: middle;
+			}
+			.my-table tr:nth-child(even) {
+				background-color: #e9e9e9;
+			}
+			.dropdown-menu {
+				padding: 10px !important;
+				min-width: 75px !important;
+			}
+			.my-table button#dropdownMenu {
+				background-color: #2980b9 !important;
+				border: none;
+			}
+			.my-table th >input {
+				border: none;
+				padding: 5px 10px;
+				height: 36px;
+			}
+			.my-table .form-check-input:hover {
+				cursor: pointer;
+			}
+			.my-table input[type='date']::-webkit-inner-spin-button {
+				display: none;
+				-webkit-appearance: none;
+            }
+            .dropdown-menu.active {
+                display: block
+            }
+		</style>
 	</head>
 
 	<body>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<!-- Start here -->
-
 					<table class="table table-bordered text-center my-table">
 						<thead>
 							<tr>
 								<th scope="col">
-									<input
-										type="date"
-										class="date">
-									
+									<input type="date" class="date" />
 								</th>
 								<th scope="col">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            Prio
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                           
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="1" id="defaultCheck1">
-                                            <label class="form-check-label" for="defaultCheck1">
-                                               1
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="2" id="defaultCheck2">
-                                            <label class="form-check-label" for="defaultCheck2">
-                                                2
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="3" id="defaultCheck3">
-                                            <label class="form-check-label" for="defaultCheck3">
-                                                3
-                                            </label>
-                                        </div>
-                                      
-                                        </div>
-                                    </div>
-                                   
+									<div class="dropdown">
+										<button
+											class="btn btn-secondary dropdown-toggle"
+											type="button"
+											id="dropdownMenu"
+											data-toggle="dropdown"
+											aria-haspopup="true"
+											aria-expanded="false"
+										>
+											Prio
+										</button>
+										<div
+											class="dropdown-menu"
+											aria-labelledby="dropdownMenu"
+										>
+											<div class="form-check">
+												<input
+													class="form-check-input"
+													type="checkbox"
+													value="1"
+													id="defaultCheck1"
+												/>
+												<label
+													class="form-check-label"
+													for="defaultCheck1"
+												>
+													1
+												</label>
+											</div>
+											<div class="form-check">
+												<input
+													class="form-check-input"
+													type="checkbox"
+													value="2"
+													id="defaultCheck2"
+												/>
+												<label
+													class="form-check-label"
+													for="defaultCheck2"
+												>
+													2
+												</label>
+											</div>
+											<div class="form-check">
+												<input
+													class="form-check-input"
+													type="checkbox"
+													value="3"
+													id="defaultCheck3"
+												/>
+												<label
+													class="form-check-label"
+													for="defaultCheck3"
+												>
+													3
+												</label>
+											</div>
+										</div>
+									</div>
 								</th>
 								<th scope="col">
 									<input
@@ -80,52 +160,39 @@
 			</div>
 		</div>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
-		<script src="assets/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
+		
+	
 		<script type="text/javascript">
+			// DOM Selector
 			const myTable = document.querySelector('.my-table');
 			const myTableBody = document.querySelector('.my-table__body');
-			const date = document.querySelector('.date');
-            const objectID = document.querySelector('.objectID');
-            const dropdownMenu = document.querySelector('.dropdown-menu');
-            
-			let dateValue = null;
-			let logerIDValue = null;
-			let filtered;
-            let logLevelCheckbox = [];
+			const dateSelector = document.querySelector('.date');
+			const objectID = document.querySelector('.objectID');
+			const dropdownMenu = document.querySelector('.dropdown-menu');
+			const dropdownMenuBtn = document.querySelector('#dropdownMenu');
 
+			// Data filter variable
+			let filtered;
+			let logLevelCheckbox = [];
 			const query = {};
 
+			// Get today date
 			let today = new Date();
 			let dd = String(today.getDate()).padStart(2, '0');
 			let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 			let yyyy = today.getFullYear();
 
-		
-
 			today = yyyy + '-' + mm + '-' + dd;
-            	date.value = today;
+			dateSelector.value = today;
+
+			// API URL
 			const URL = `https://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=${today}`;
-			//     entryTime: "15:12:14.000"
-            //     entrydate: "2019-06-27T00:00:00"
-            //     logLevel: 1
-            //     logmessage: "ExecuteQuery: cmd = System.Data.SqlClient.SqlCommand"
-            //     objectID: "1000460"
+
+			// Table content loadted when window load
 			window.addEventListener('DOMContentLoaded', e => {
 				fetch(URL)
 					.then(resp => resp.json())
 					.then(function(data) {
-                        
 						data.logmessages.forEach(element => {
 							myTableBody.insertAdjacentHTML(
 								'beforeend',
@@ -142,71 +209,51 @@
 					});
 			});
 
-			date.addEventListener('change', e => {
-				query.entrydate = date.value;
-                if(query.objectID === '') {
-                    delete query.objectID;
-                }
+			// Filter table data by date select
+			dateSelector.addEventListener('change', e => {
+				query.entrydate = dateSelector.value;
+				if (query.objectID === '') {
+					delete query.objectID;
+				}
 				fetch(URL)
 					.then(resp => resp.json())
 					.then(function(data) {
+						// Remove the extra content from entrydate property
+						filtered = data.logmessages.map(item => {
+							return {
+								entryTime: item.entryTime,
+								entrydate: item.entrydate.slice(0, 10),
+								logLevel: item.logLevel,
+								logmessage: item.logmessage,
+								objectID: item.objectID
+							};
+						});
 
-                        let tempArray = data.logmessages.map(item => {
-                            return {
-                                entryTime : item.entryTime,
-                                entrydate : item.entrydate.slice(0, 10),
-                                logLevel : item.logLevel,
-                                logmessage : item.logmessage,
-                                objectID : item.objectID
-                            }
-                        })
-                        console.log('on date click : ', query);
-
-						filtered = tempArray.filter(item => {
-						                        
+						// Filter data by date or/and ID
+						filtered = filtered.filter(item => {
 							for (let key in query) {
-                               
-                                if(query.objectID === '') {
-                                    delete query.objectID;
-                                    if (
-                                        item[key] === undefined ||
-                                        item[key] != query[key]
-                                    ) {
-                                        return false;
-                                    }
-                                } else {
-                                    if (
-                                        item[key] === undefined ||
-                                        item[key] != query[key]
-                                    ) {
-                                        return false;
-                                    }
-                                }
-								
+								if (
+									item[key] === undefined ||
+									item[key] != query[key]
+								) {
+									return false;
+								}
 							}
 							return true;
 						});
-console.log('Date click filtered array : ', filtered);
 
-                        filtered = filtered.filter(item => {
-
-                            if (logLevelCheckbox.length !== 0) {
-                                for (let key of logLevelCheckbox) {
-
-                                    if (item['logLevel'] == key) {
-                                        console.log('item["logLevel"] : ', item['logLevel']);
-                                        console.log('logLevelCheckbox[key] : ', key);
-                                        return true;
-                                    }
-                                }
-                            } else {
-                                return true
-                            }
-
-                        })
-
+						// Filter data by logLevel or checkbox or Prio
+						if (logLevelCheckbox.length !== 0) {
+							filtered = filtered.filter(item => {
+								for (let key of logLevelCheckbox) {
+									if (item['logLevel'] == key) {
+										return true;
+									}
+								}
+							});
+						}
+						// Insert the filtered data to the table
 						myTableBody.innerHTML = '';
-
 						filtered.forEach(element => {
 							myTableBody.innerHTML += `
 							<tr>
@@ -220,20 +267,23 @@ console.log('Date click filtered array : ', filtered);
 					});
 			});
 
+			// Filter table data by iD select
 			objectID.addEventListener('change', e => {
+				if (isNaN(objectID.value)) {
+					alert('Please Enter a Number Value!');
+					return false;
+				}
 				query.objectID = objectID.value;
-                console.log('Loger iD ', objectID.value);
-
 				fetch(URL)
 					.then(resp => resp.json())
 					.then(function(data) {
-                        console.log('on ID click : ', query);
-					if(query.objectID == '') {
-                        delete query.objectID;
-                        	data.logmessages.forEach(element => {
-                            myTableBody.insertAdjacentHTML(
-                                'beforeend',
-                                `
+						// If ObjectId empty then show the all data
+						if (query.objectID == '') {
+							delete query.objectID;
+							data.logmessages.forEach(element => {
+								myTableBody.insertAdjacentHTML(
+									'beforeend',
+									`
 							<tr>
 								<td>${element.entryTime}</td>
 								<td>${element.logLevel}</td>
@@ -241,52 +291,48 @@ console.log('Date click filtered array : ', filtered);
 								<td>${element.logmessage}</td>
 							</tr>
 			         `
-                            );
-                        });
-                    } else {
-                         let tempArray = data.logmessages.map(item => {
-                            return {
-                                entryTime: item.entryTime,
-                                entrydate: item.entrydate.slice(0, 10),
-                                logLevel: item.logLevel,
-                                logmessage: item.logmessage,
-                                objectID: item.objectID
-                            }
-                        })
-                        	filtered = tempArray.filter(item => {
-                            for (let key in query) { 
-                                
-                                if (
-                                    item[key] === undefined ||
-                                    item[key] != query[key]
-                                ) {
-                                    return false;
-                                }
-                            }
-                            return true;
-                        });
-                        console.log('Before 2nd filter ', filtered);
-                        
-                        filtered = filtered.filter(item => {
+								);
+							});
+						} else {
+							// Remove the extra content from entrydate property
+							filtered = data.logmessages.map(item => {
+								return {
+									entryTime: item.entryTime,
+									entrydate: item.entrydate.slice(0, 10),
+									logLevel: item.logLevel,
+									logmessage: item.logmessage,
+									objectID: item.objectID
+								};
+							});
+							// Filter data by date or/and ID
+							filtered = filtered.filter(item => {
+								for (let key in query) {
+									if (
+										item[key] === undefined ||
+										item[key] != query[key]
+									) {
+										return false;
+									}
+								}
+								return true;
+							});
 
-                           if(logLevelCheckbox.length !== 0) {
-                                for (let key of logLevelCheckbox) {
-
-                                   if (item['logLevel'] == key) {
-                                       console.log('item["logLevel"] : ', item['logLevel']);
-                                       console.log('logLevelCheckbox[key] : ', key);
-                                       return true;
-                                   }
-                               }
-                           } else {
-                               return true
-                           }
-
-                        })
-                        console.log('After 2nd filter ', filtered);
-                        myTableBody.innerHTML = '';
-                        filtered.forEach(element => {
-                            myTableBody.innerHTML += `
+							// Filter data by logLevel or checkbox or Prio
+							filtered = filtered.filter(item => {
+								if (logLevelCheckbox.length !== 0) {
+									for (let key of logLevelCheckbox) {
+										if (item['logLevel'] == key) {
+											return true;
+										}
+									}
+								} else {
+									return true;
+								}
+							});
+							// Insert the filtered data to the table
+							myTableBody.innerHTML = '';
+							filtered.forEach(element => {
+								myTableBody.innerHTML += `
 										<tr>
 											<td>${element.entryTime}</td>
 											<td>${element.logLevel}</td>
@@ -294,74 +340,62 @@ console.log('Date click filtered array : ', filtered);
 											<td>${element.logmessage}</td>
 										</tr>
 						`;
-                        });
-                    }
+							});
+						}
 					});
 			});
 
+			// Filter table data by Loglevel or checkbox or prio select
 			dropdownMenu.addEventListener('click', e => {
-               
-               console.log('on checkbox click : ', query);
-                if(e.target.value !== undefined) {
-               
-                    logLevelCheckbox = [];
-                    for (let i = 0; i < dropdownMenu.children.length; i++) {
-                        if (!dropdownMenu.children[i].children[0].checked) {
-                            logLevelCheckbox.push(dropdownMenu.children[i].children[0].value);
-                            // logLevelCheckbox['label' + dropdownMenu.children[i].children[0].value] = dropdownMenu.children[i].children[0].value
-                        }
 
-                    }
-                   
-                  
-                    fetch(URL)
-                        .then(resp => resp.json())
-                        .then(function (data) {
-                            console.log(query);
-                            console.log(logLevelCheckbox);
-                        
-                                let tempArray = data.logmessages.map(item => {
-                                    return {
-                                        entryTime: item.entryTime,
-                                        entrydate: item.entrydate.slice(0, 10),
-                                        logLevel: item.logLevel,
-                                        logmessage: item.logmessage,
-                                        objectID: item.objectID
-                                    }
-                                })
-                                filtered = tempArray.filter(item => {
-                                  
-                                    for (let key in query) {
-                                       
-                                        if (
-                                            item[key] === undefined ||
-                                            item[key] !== query[key]
-                                        ) {
-                                            return false;
-                                        }
-                                    }
-                                    return true;
-                                });
-                            console.log("After 1st filter ", filtered);
-                            
-                               
-                              filtered = filtered.filter(item => {
+				if (e.target.value !== undefined) {
+					logLevelCheckbox = [];
+					// unchecked value push to logLevelCheckbox for filter
+					for (let i = 0; i < dropdownMenu.children.length; i++) {
+						if (!dropdownMenu.children[i].children[0].checked) {
+							logLevelCheckbox.push(
+								dropdownMenu.children[i].children[0].value
+							);
+						}
+					}
 
-                                  for (let key of logLevelCheckbox) {
-                                      
-                                      if (item['logLevel'] == key) {
-                                          console.log('item["logLevel"] : ', item['logLevel']);
-                                          console.log('logLevelCheckbox[key] : ', key);
-                                          return true;
-                                      }
-                                  }
-                                    
-                                })
-                          console.log("After 2nd filter ",filtered);
-
-                                myTableBody.innerHTML = '';
-                                filtered.forEach(element => {
-                                    myTableBody.innerHTML += `
+					fetch(URL)
+						.then(resp => resp.json())
+						.then(function(data) {
+							// Remove the extra content from entrydate property
+							filtered = data.logmessages.map(item => {
+								return {
+									entryTime: item.entryTime,
+									entrydate: item.entrydate.slice(0, 10),
+									logLevel: item.logLevel,
+									logmessage: item.logmessage,
+									objectID: item.objectID
+								};
+							});
+							// Filter data by date or/and ID
+							filtered = filtered.filter(item => {
+								for (let key in query) {
+									if (
+										item[key] === undefined ||
+										item[key] !== query[key]
+									) {
+										return false;
+									}
+								}
+								return true;
+							});
+							// Filter data by logLevel or checkbox or Prio
+							filtered = filtered.filter(item => {
+								for (let key of logLevelCheckbox) {
+									if (item['logLevel'] == key) {
+										return true;
+									}
+								}
+							});
+							// Insert the filtered data to the table
+							myTableBody.innerHTML = '';
+							filtered.forEach(element => {
+								myTableBody.innerHTML += `
 										<tr>
 											<td>${element.entryTime}</td>
 											<td>${element.logLevel}</td>
@@ -369,14 +403,17 @@ console.log('Date click filtered array : ', filtered);
 											<td>${element.logmessage}</td>
 										</tr>
 						`;
-                                });
-                            
-                        });
-
-
-                     
-                }
+							});
+						});
+				}
 			});
-		</script>
+        
+            //   Show hide checkbox dropdown
+            dropdownMenuBtn.addEventListener('click', e => {
+                dropdownMenu.classList.toggle('active')
+            })
+
+           
+        </script>
 	</body>
 </html>
