@@ -175,6 +175,7 @@
 			let filtered;
 			let logLevelCheckbox = [];
 			const query = {};
+            let showDate;
 
 			// Get today date
 			let today = new Date();
@@ -185,15 +186,15 @@
 
 			today = yyyy + '-' + mm + '-' + dd;
 			dateSelector.value = today;
-            query.entrydate = today;
-			// API URL
-			const URL = `https://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=`;
+            showDate = today;
+
+			const URL = `http://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=`;
 
 			// Table content loadted when window load
 			window.addEventListener('DOMContentLoaded', e => {
-				fetch(URL + query.entrydate)
+				fetch(URL +showDate)
 					.then(resp => resp.json())
-					.then(function(data) {                        
+					.then(function(data) {                  
 						data.logmessages.forEach(element => {
 							myTableBody.insertAdjacentHTML(
 								'beforeend',
@@ -212,16 +213,16 @@
 
 			// Filter table data by date select
 			dateSelector.addEventListener('change', e => {
-                // If the api return different data on different date then just uncomment the below line
-				// query.entrydate = dateSelector.value;
+				showDate = dateSelector.value;
 
 				if (query.objectID === '') {
 					delete query.objectID;
 				}
             
-				fetch(URL + query.entrydate)
+				fetch(URL + showDate)
 					.then(resp => resp.json())
 					.then(function(data) {
+                        
 						// Remove the extra content from entrydate property
 						filtered = data.logmessages.map(item => {
 							return {
@@ -233,7 +234,7 @@
 							};
 						});
 
-						// Filter data by date or/and ID
+						// Filter data by Object ID
 						filtered = filtered.filter(item => {
 							for (let key in query) {
 								if (
@@ -256,7 +257,9 @@
 								}
 							});
 						}
-						// Insert the filtered data to the table
+						
+                        
+                        // Insert the filtered data to the table
 						myTableBody.innerHTML = '';
 						filtered.forEach(element => {
 							myTableBody.innerHTML += `
@@ -268,7 +271,11 @@
 							</tr>
 			         `;
 						});
-					});            
+					})
+                    .catch( e => {
+                        console.log(e);
+                        
+                    })            
             });
 
 			// Filter table data by iD select
@@ -279,7 +286,7 @@
 					return false;
 				}
 				query.objectID = objectID.value;
-				fetch(URL + query.entrydate)
+				fetch(URL + showDate)
 					.then(resp => resp.json())
 					.then(function(data) {
 						// If ObjectId empty then show the all data
@@ -366,7 +373,7 @@
                         }
 					}
 
-					fetch(URL + query.entrydate)
+					fetch(URL + showDate)
 						.then(resp => resp.json())
 						.then(function(data) {
 							// Remove the extra content from entrydate property
