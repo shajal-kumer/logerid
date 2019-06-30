@@ -185,15 +185,15 @@
 
 			today = yyyy + '-' + mm + '-' + dd;
 			dateSelector.value = today;
-
+            query.entrydate = today;
 			// API URL
-			const URL = `https://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=${today}`;
+			const URL = `https://nettiethuis-in.azurewebsites.net/api/GetLog?showDate=`;
 
 			// Table content loadted when window load
 			window.addEventListener('DOMContentLoaded', e => {
-				fetch(URL)
+				fetch(URL + query.entrydate)
 					.then(resp => resp.json())
-					.then(function(data) {
+					.then(function(data) {                        
 						data.logmessages.forEach(element => {
 							myTableBody.insertAdjacentHTML(
 								'beforeend',
@@ -212,11 +212,14 @@
 
 			// Filter table data by date select
 			dateSelector.addEventListener('change', e => {
-				query.entrydate = dateSelector.value;
+                // If the api return different data on different date then just uncomment the below line
+				// query.entrydate = dateSelector.value;
+
 				if (query.objectID === '') {
 					delete query.objectID;
 				}
-				fetch(URL)
+            
+				fetch(URL + query.entrydate)
 					.then(resp => resp.json())
 					.then(function(data) {
 						// Remove the extra content from entrydate property
@@ -265,17 +268,18 @@
 							</tr>
 			         `;
 						});
-					});
-			});
+					});            
+            });
 
 			// Filter table data by iD select
 			objectID.addEventListener('change', e => {
+                
 				if (isNaN(objectID.value)) {
 					alert('Please Enter a Number Value!');
 					return false;
 				}
 				query.objectID = objectID.value;
-				fetch(URL)
+				fetch(URL + query.entrydate)
 					.then(resp => resp.json())
 					.then(function(data) {
 						// If ObjectId empty then show the all data
@@ -319,17 +323,15 @@
 							});
 
 							// Filter data by logLevel or checkbox or Prio
-							filtered = filtered.filter(item => {
-								if (logLevelCheckbox.length !== 0) {
+                            if (logLevelCheckbox.length !== 0) {
+							    filtered = filtered.filter(item => {
 									for (let key of logLevelCheckbox) {
 										if (item['logLevel'] == key) {
 											return true;
 										}
 									}
-								} else {
-									return true;
-								}
-							});
+							    });
+                             }
 							// Insert the filtered data to the table
 							myTableBody.innerHTML = '';
 							filtered.forEach(element => {
@@ -344,7 +346,8 @@
 							});
 						}
 					});
-			});
+            
+            });
 
 			// Filter table data by Loglevel or checkbox or prio select
 			dropdownMenu.addEventListener('click', e => {
@@ -353,14 +356,17 @@
 					logLevelCheckbox = [];
 					// unchecked value push to logLevelCheckbox for filter
 					for (let i = 0; i < dropdownMenu.children.length; i++) {
-						if (!dropdownMenu.children[i].children[0].checked) {
+						if (dropdownMenu.children[i].children[0].checked) {
 							logLevelCheckbox.push(
 								dropdownMenu.children[i].children[0].value
 							);
-						}
+                            dropdownMenu.classList.toggle('active')
+						} else {
+                            dropdownMenu.classList.toggle('active')
+                        }
 					}
 
-					fetch(URL)
+					fetch(URL + query.entrydate)
 						.then(resp => resp.json())
 						.then(function(data) {
 							// Remove the extra content from entrydate property
@@ -386,13 +392,15 @@
 								return true;
 							});
 							// Filter data by logLevel or checkbox or Prio
-							filtered = filtered.filter(item => {
+							if(logLevelCheckbox.length !== 0) {
+                                filtered = filtered.filter(item => {
 								for (let key of logLevelCheckbox) {
 									if (item['logLevel'] == key) {
 										return true;
 									}
 								}
 							});
+                            }
 							// Insert the filtered data to the table
 							myTableBody.innerHTML = '';
 							filtered.forEach(element => {
@@ -407,11 +415,19 @@
 							});
 						});
 				}
-			});
+            });
         
             //   Show hide checkbox dropdown
             dropdownMenuBtn.addEventListener('click', e => {
-                dropdownMenu.classList.toggle('active')
+                dropdownMenu.classList.toggle('active');
+                e.stopPropagation()
+            })
+
+            document.addEventListener("click", e => {
+                if(dropdownMenu.classList.contains("active")) {
+                     dropdownMenu.classList.remove('active')
+                }
+                e.stopPropagation();
             })
 
            
